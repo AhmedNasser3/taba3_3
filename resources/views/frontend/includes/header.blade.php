@@ -4,9 +4,9 @@
             <div class="header_data">
                 <div class="header_auth">
                     <div class="header_auth_lang">
-                        <a href="">
+                        {{--  <a href="">
                         <button>EN</button>
-                    </a>
+                    </a>  --}}
                 </div>
                 @auth
                 <div class="header_auth_register">
@@ -31,8 +31,12 @@
                 <div class="header_links">
                     <ul>
                         <a href="/"><li>رئيسية</li></a>
+                        @auth
                         <a href="{{ route('cart.show') }}"><li>طلباتي</li></a>
+                        @endauth
                         <a href=""><li>خدماتنا</li></a>
+                        <a href="#about"><li>من نحن </li></a>
+                        <a href="#info"><li>الشروط والاحكام</li></a>
                         <a href="/#contact"><li>التحدث معنا</li></a>
                     </ul>
                 </div>

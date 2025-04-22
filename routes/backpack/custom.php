@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 // --------------------------
 // This route file is loaded automatically by Backpack\CRUD.
 // Routes you generate using Backpack\Generators will be placed here.
+Route::get('complete-printservice/{id}', [\App\Http\Controllers\Admin\PrintserviceinprogressCrudController::class, 'markAsCompleted'])->name('printserviceinprogress.complete');
+Route::post('/admin/printserviceinprogress/{id}/upload', [\App\Http\Controllers\Admin\PrintserviceinprogressCrudController::class, 'uploadPrinterFile'])
+    ->name('admin.printserviceinprogress.uploadPrinterFile');
 
 Route::group([
     'prefix' => config('backpack.base.route_prefix', 'admin'),

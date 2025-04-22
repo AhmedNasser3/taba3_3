@@ -33,7 +33,16 @@
                     bg-gray-200 text-gray-700
                   @endif
                 ">
-                  {{ $order->status === 'in_progress' ? 'جاري التنفيذ' : $order->status }}
+                @if($order->status === 'in_progress')
+                جاري التنفيذ
+              @elseif($order->status === 'pending')
+                تحت المراجعة
+              @elseif($order->status === 'completed')
+                تم الانتهاء
+              @else
+                {{ $order->status }} <!-- في حالة عدم وجود أي من الحالات المحددة -->
+              @endif
+
                 </span>
               </div>
 
@@ -72,7 +81,7 @@
 
             {{-- أزرار التفاعل --}}
             <div class="flex items-center justify-between mt-4">
-              @if($order->status !== 'in_progress')
+              @if($order->status == 'pending')
                 <form method="POST" action="">
                   @csrf
                   @method('DELETE')
@@ -83,16 +92,36 @@
                     حذف الطلب
                   </button>
                 </form>
-              @else
+              @elseif ($order->status == 'in_progress')
                 <form method="POST" action="">
                   @csrf
-                  <button type="submit" class="text-green-600 hover:text-green-800">
+                  @if ($order->printer_file != null)
+
+                  @endif
+                  <button type="submit" class="text-gray-600 hover:text-green-800">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
-                    دفع الطلب
-                  </button>
+                    <a href="{{ asset('storage/' . $order->printer_file) }}" class="btn btn-sm btn-primary" download>تنزيل الملف</a>
+                </button>
+                    <a href="https://wa.me/96567661103" target="_blank" class="flex items-center text-green-600 hover:text-green-800">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span class="ml-1">دفع الطلب</span>
+                      </a>
+
                 </form>
+                @else
+                <form method="POST" action="">
+                    @csrf
+                    <button type="submit" class="text-green-600 hover:text-green-800">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                      </svg>
+                      <a href="{{ asset('storage/' . $order->printer_file) }}" class="btn btn-sm btn-primary" download>تنزيل الملف</a>
+                    </button>
+                  </form>
               @endif
             </div>
           </div>

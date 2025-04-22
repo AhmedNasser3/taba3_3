@@ -9,8 +9,73 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>الطباع</title>
-</head>
-<body>
+    <style>
+        .social-icons {
+          position: fixed;
+          top: 40%;
+          right: 20px;
+          transform: translateY(-50%);
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          z-index: 999;
+        }
+
+        .social-icons a {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background-color: #e7e7e733;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          transition: all 0.3s ease;
+          cursor: pointer;
+          text-decoration: none;
+        }
+
+        .social-icons a:hover {
+          transform: scale(1.1) rotate(10deg);
+          box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .social-icons i {
+          font-size: 22px;
+          color: #333;
+          transition: color 0.3s;
+        }
+
+        .social-icons a.facebook:hover i { color: #1877f2; }
+        .social-icons a.twitter:hover i { color: #1da1f2; }
+        .social-icons a.whatsapp:hover i { color: #25d366; }
+        .social-icons a.instagram:hover i { color: #e1306c; }
+      </style>
+
+      <!-- Font Awesome for icons -->
+      <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+
+      <div class="social-icons">
+
+        <a href="https://x.com/el6aba3?s=11" style="color: #1da1f2" class="twitter" title="Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="https://www.tiktok.com/@el6aba3?is_from_webapp=1&sender_device=pc" style="color: #141414" class="twitter" title="Twitter">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://wa.me/96567661103" style="color: #25d366" class="whatsapp" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        <a href="https://www.instagram.com/el6aba3/" style="color: #e1306c" class="instagram" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://snapchat.com/t/BqLVXMbL" style="color: #cfe130" class="snap" title="snap">
+          <i class="fab fa-snapchat"></i>
+        </a>
+      </div>
+
     @include('frontend.includes.header')
     <main style="min-height: 100vh">
     @yield('Content')

@@ -27,7 +27,7 @@ class PrintServiceCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\PrintService::class);
+        CRUD::setModel(PrintService::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/print-service');
         CRUD::setEntityNameStrings('print service', 'طلب طباعة');
     }

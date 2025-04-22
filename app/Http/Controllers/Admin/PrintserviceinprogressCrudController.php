@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use Illuminate\Support\Str; // تأكد من استيراد هذا في الأعلى
 
+use Alert;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PrintserviceinprogressRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -40,6 +42,39 @@ class PrintserviceinprogressCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::addColumn([
+            'name' => 'upload_button',
+            'label' => 'رفع من الطابعة',
+            'type' => 'closure',
+            'function' => function($entry) {
+                $uploadUrl = route('admin.printserviceinprogress.uploadPrinterFile', $entry->id);
+                return '
+                    <form method="POST" action="' . $uploadUrl . '" enctype="multipart/form-data" style="display:flex; gap:5px;">
+                        ' . csrf_field() . '
+                        <input type="file" name="printer_file" accept=".pdf,.doc,.docx,.xlsx" style="width: 130px;" required>
+                        <button type="submit" class="btn btn-sm btn-warning">رفع</button>
+                    </form>
+                ';
+            },
+            'escaped' => false,
+        ]);
+
+        CRUD::addColumn([
+            'name' => 'mark_as_completed',
+            'label' => 'إجراء',
+            'type' => 'closure',
+            'function' => function($entry) {
+                // فقط إذا لم يكن مكتمل بالفعل
+                if ($entry->status !== 'completed') {
+                    $url = route('printserviceinprogress.complete', $entry->id);
+                    return '<a href="' . $url . '" class="btn btn-sm btn-success">تم الإكمال</a>';
+                } else {
+                    return '<span class="badge badge-success">مكتمل</span>';
+                }
+            },
+            'escaped' => false,
+        ]);
+
         // إضافة تصفية ليعرض فقط السجلات التي تحتوي على status = 'in_progress'
         CRUD::addClause('where', 'status', '=', 'in_progress');
 
@@ -61,6 +96,7 @@ class PrintserviceinprogressCrudController extends CrudController
             'name' => 'type',
             'label' => 'نوع الخدمة',
         ]);
+
         CRUD::addColumn([
             'name' => 'file',
             'label' => 'الملف',
@@ -97,7 +133,45 @@ class PrintserviceinprogressCrudController extends CrudController
             ],
         ]);
     }
+    public function uploadPrinterFile($id)
+    {
+        $request = request();
 
+        $request->validate([
+            'printer_file' => 'required|file|mimes:pdf,doc,docx,xlsx|max:20480', // 20MB max
+        ]);
+
+        $entry = \App\Models\Printserviceinprogress::findOrFail($id);
+
+        // حذف الملف القديم إن وجد
+        if ($entry->printer_file && Storage::disk('public')->exists($entry->printer_file)) {
+            Storage::disk('public')->delete($entry->printer_file);
+        }
+
+        // توليد اسم عشوائي للملف مع الحفاظ على الامتداد
+        $file = $request->file('printer_file');
+        $fileName = Str::random(12) . '.' . $file->getClientOriginalExtension();
+
+        // رفع الملف باستخدام الاسم المشفر
+        $path = $file->storeAs('printer_files', $fileName, 'public');
+
+        // حفظ المسار في قاعدة البيانات
+        $entry->printer_file = $path;
+        $entry->save();
+
+        \Alert::success('تم رفع الملف بنجاح واستبداله.')->flash();
+        return redirect()->back();
+    }
+
+    public function markAsCompleted($id)
+    {
+        $record = \App\Models\Printserviceinprogress::findOrFail($id);
+        $record->status = 'completed';
+        $record->save();
+
+        Alert::success('تم تحديث الحالة إلى مكتمل.')->flash();
+        return redirect()->back();
+    }
 
 
     /**
