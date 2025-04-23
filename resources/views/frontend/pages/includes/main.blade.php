@@ -61,7 +61,7 @@ use App\Models\User;
                     <div class="hero_boxes_content">
                         <div class="hero_boxes_data">
                             <div class="hero_boxes_img">
-                                <img src="{{ asset('images/hero.png') }}" alt="">
+                                <img src="https://sp-ao.shortpixel.ai/client/q_glossy,ret_img,w_640,h_423/https://sp-ao.shortpixel.ai/client/q_glossy,ret_img,w_640/https://s22908.pcdn.co/wp-content/uploads/2018/03/printer-tracking.jpg" alt="">
                             </div>
                             <div class="hero_boxes_titles">
                                 <h2>الطباعة</h2>
@@ -70,17 +70,17 @@ use App\Models\User;
                         </div>
                         <div class="hero_boxes_data" style="border: none; background-color: #0099ad;">
                             <div class="hero_boxes_img">
-                                <img src="{{ asset('images/hero.png') }}" alt="">
+                                <img src="{{ asset('images/WhatsApp Image 2025-04-23 at 1.37.21 PM (1).jpeg') }}" alt="">
                             </div>
                             <div class="hero_boxes_titles">
                                 <h2 style="color: #4fccb7">مقاسات ورق متعددة تناسب احتياجاتك</h2>
-                                <h4 style="color: white">نوفر جميع مقاسات الورق مثل A4، A3، A5، وB5، بالإضافة إلى أحجام
+                                <h4 style="color: white">نوفر جميع مقاسات الورق مثل A4، A3،  بالإضافة إلى أحجام
                                     مخصصة حسب طلب العميل. حدد المقاس المناسب لمشروعك واطبع بأعلى جودة.</h4>
                             </div>
                         </div>
                         <div class="hero_boxes_data">
                             <div class="hero_boxes_img">
-                                <img src="{{ asset('images/hero.png') }}" alt="">
+                                <img src="https://cdn.aarp.net/content/dam/aarp/home-and-family/personal-technology/2023/06/1140-print-from-phone.png" alt="">
                             </div>
                             <div class="hero_boxes_titles">
                                 <h2>طباعة ملونة وأحادية</h2>
@@ -134,7 +134,7 @@ use App\Models\User;
 </div>
 
 {{-- partners --}}
-<div class="partners">
+{{--  <div class="partners">
     <div class="partners_container">
         <div class="partners_content">
             <div class="partners_data">
@@ -157,9 +157,9 @@ use App\Models\User;
             </div>
         </div>
     </div>
-</div>
+</div>  --}}
 <div class="option_title">
-    <h2>الطباعين  <span>المتاحين</span></h2>
+    <h2>اختار الطباع<span> المتاح لعمل طلب جديد  </span></h2>
 </div>
 <div class="py-8 bg-gray-100 min-h-100" style="display: flex;justify-content:center;align-items:center">
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -646,7 +646,7 @@ use App\Models\User;
 </head>
 <body>
 
-    <div class="wrapper-print-options">
+    {{--  <div class="wrapper-print-options">
         <h2 class="title-print-main">خيارات <span>الطباعة</span></h2>
 
         <div class="section-print">
@@ -699,10 +699,40 @@ use App\Models\User;
         </div>
 
         <button class="print-submit-btn" type="submit">احجز الآن</button>
-    </div>
+    </div>  --}}
 
 </body>
 </html>
+<div id="contact" class="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-white-100 to-white-200">
+    <div class="w-full max-w-md p-8 bg-white shadow-2xl rounded-2xl">
+      <h2 class="mb-6 text-3xl font-bold text-center text-gray-800" style="padding: 5vh">📬 تواصل معنا</h2>
+
+      <form class="space-y-5" style="padding: 5vh">
+        <div>
+          <label class="block mb-1 text-sm font-semibold text-gray-700">البريد الإلكتروني</label>
+          <input type="email" placeholder="example@email.com"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50" />
+        </div>
+
+        <div>
+          <label class="block mb-1 text-sm font-semibold text-gray-700">رقم الهاتف</label>
+          <input type="tel" placeholder="0123456789"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50" />
+        </div>
+
+        <div>
+          <label class="block mb-1 text-sm font-semibold text-gray-700">الرسالة</label>
+          <textarea rows="4" placeholder="اكتب رسالتك هنا"
+                    class="w-full px-4 py-2 border border-gray-300 resize-none rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"></textarea>
+        </div>
+
+        <button type="submit"
+                class="w-full py-2 font-semibold text-white transition-all duration-300 bg-blue-600 shadow-md rounded-xl hover:bg-blue-700">
+          إرسال الرسالة
+        </button>
+      </form>
+    </div>
+  </div>
 
     {{--  why  --}}
     <div class="option_title">
@@ -717,8 +747,7 @@ use App\Models\User;
                             <img src="https://cdn-icons-png.flaticon.com/512/1533/1533895.png" alt="مراكز الطباعة" width="70">
                         </div>
                         <div class="why_text">
-                            <h3 style="color:#000000; margin-top: 15px;">تعدد مراكز الطباعة</h3>
-                            <p style="color:#000000;">لتكون الأقرب لك دائماً</p>
+                            <h3 style="color:#000000; margin-top: 15px;">خصوصية كاملة لملفاتك</h3>
                         </div>
                     </div>
                     <div class="why_bg">

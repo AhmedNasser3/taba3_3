@@ -77,10 +77,11 @@
       </div>
 
     @include('frontend.includes.header')
-    <main style="min-height: 100vh">
-    @yield('Content')
-</main>
-
+    <div style="padding: 0;margin:0;">
+        <main style="min-height: 100vh">
+            @yield('Content')
+        </main>
+    </div>
     @include('frontend.includes.footer')
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

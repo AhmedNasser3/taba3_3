@@ -8,6 +8,7 @@
     font-family: "Noto Kufi Arabic", serif;
     font-optical-sizing: auto;
     font-style: normal;
+    scroll-behavior: smooth;
 }
 
 
@@ -516,6 +517,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+@media screen and (max-width:1024px) {
+    .menu_data {
+        text-align: center;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 .menu_title {

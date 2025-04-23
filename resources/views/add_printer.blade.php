@@ -10,128 +10,167 @@
     </div>
 @endif
 
-<div class="options">
-    <div class="option_container">
-        <div class="option_content">
-            <div class="option_data">
-                <div class="option_title">
-                    <h2>خيارات <span>الطباعة</span></h2>
-                </div>
-                <div class="option_box">
-                    <div class="option_box_container">
-                        <div class="option_box_content">
-                            <div class="option_box_data">
-                                <form action="{{ route('print.store') }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
+<div class="print-form-wrapper">
+    <div class="print-form-box">
+        <h2 class="form-title">خيارات <span>الطباعة</span></h2>
+        <form action="{{ route('print.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
 
-                                    <!-- نوع الخدمة -->
-                                    <div class="option_box_1_title"><h3>نوع الخدمة</h3></div>
-                                    <div class="option_box_1_cn">
-                                        <select name="type" id="serviceType" style="width: 200px;" onchange="updateOptions()">
-                                            <option value="print">طباعة</option>
-                                            <option value="operator">برينت</option>
-                                        </select>
-                                    </div>
+            <!-- نوع الخدمة -->
+            <label>نوع الخدمة</label>
+            <select name="type" id="serviceType" onchange="updateOptions()">
+                <option value="print">طباعة</option>
+                <option value="operator">برينت</option>
+            </select>
 
-                                    <!-- حجم الورق -->
-                                    <div class="option_box_1_title"><h3>حجم الورق</h3></div>
-                                    <div class="option_box_1_cn" style="display: flex; gap: 15px;">
-                                        <label><input type="radio" name="paper_size" value="A4" onchange="calculatePrice()"> A4</label>
-                                        <label><input type="radio" name="paper_size" value="A3" onchange="calculatePrice()"> A3</label>
-                                    </div>
+            <!-- حجم الورق -->
+            <label>حجم الورق</label>
+            <div class="flex-group" id="paperSizes"></div>
 
-                                    <!-- لون الطباعة -->
-                                    <div class="option_box_1_title"><h3>لون الطباعة</h3></div>
-                                    <div class="option_box_1_cn" style="display: flex; gap: 15px;">
-                                        <label><input type="radio" name="print_color" value="black" onchange="calculatePrice()"> أسود</label>
-                                        <label><input type="radio" name="print_color" value="color" onchange="calculatePrice()"> ملون</label>
-                                    </div>
-
-                                    <input type="hidden" name="status" value="pending">
-
-                                    <!-- نوع الملف -->
-                                    <div class="option_box_1_title"><h3>نوع الملف</h3></div>
-                                    <div class="option_box_1_cn">
-                                        <select name="print_type" id="fileType" style="width: 200px;" onchange="calculatePrice()">
-                                            <option value="pdf">PDF</option>
-                                            <option value="word">Word</option>
-                                            <option value="excel">Excel</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- عدد الأوراق -->
-                                    <div class="option_box_1_title"><h3>عدد الأوراق</h3></div>
-                                    <div class="option_box_1_cn">
-                                        <input type="number" name="paper_count" id="paperCount" min="1" style="width: 200px;" placeholder="مثال: 10" oninput="calculatePrice()">
-                                        <p style="color: red; margin-top: 5px;">🔴 تنبيه ‼️ <br> عملائنا الكرام، أكثر من خمس صفحات طباعة يتم تسليمها بعد ٢٤ ساعة.</p>
-                                    </div>
-
-                                    <!-- السعر النهائي -->
-                                    <div class="option_box_1_title"><h3>السعر النهائي</h3></div>
-                                    <div class="option_box_1_cn">
-                                        <input type="text" id="totalPrice" readonly style="width: 200px; background-color: #eee;">
-                                    </div>
-
-                                    <!-- نوع الطباعة -->
-                                    <div class="option_box_1_title"><h3>الطباعة</h3></div>
-                                    <div class="option_box_1_cn">
-                                        <select name="print_side" style="width: 200px;">
-                                            <option value="single">وجه واحد</option>
-                                            <option value="double">وجهين</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- اسم الطابعة -->
-                                    <div class="option_box_1_title"><h3>الطابعة</h3></div>
-                                    <div class="option_box_1_cn">
-                                        <input hidden value="{{ $user->id }}" type="text" name="printer_id">
-                                    </div>
-
-                                    <!-- رفع الملف -->
-                                    <div class="option_box_1_title"><h3>رفع الملف</h3></div>
-                                    <div class="option_box_1_cn">
-                                        <input type="file" name="file" style="width: 300px;">
-                                    </div>
-
-                                    <!-- تاريخ التسليم -->
-                                    <div class="option_box_1_title"><h3>تاريخ التسليم</h3></div>
-                                    <div class="option_box_1_cn">
-                                        <input type="datetime-local" name="dead_line" style="width: 250px;">
-                                    </div>
-
-                                    <!-- ملاحظات -->
-                                    <div class="option_box_1_title" style="padding-top: 20px;">
-                                        <h3>ملاحظات إضافية حول الطلب</h3>
-                                    </div>
-                                    <div class="option_box_1_cn">
-                                        <textarea name="comment" style="height: 100px;width:100%;"></textarea>
-                                    </div>
-
-                                    <!-- زر الإرسال -->
-                                    <div class="option_box_1_cn" style="margin-top: 30px;">
-                                        <button type="submit" style="padding: 10px 25px; background-color: #4fccb7; color: white; border: none; border-radius: 5px;">إرسال الطلب</button>
-                                    </div>
-                                </form>
-                            </div> <!-- /option_box_data -->
-                        </div>
-                    </div>
-                </div>
+            <!-- لون الطباعة -->
+            <label>لون الطباعة</label>
+            <div class="flex-group">
+                <label><input type="radio" name="print_color" value="black" onchange="calculatePrice()"> أسود</label>
+                <label><input type="radio" name="print_color" value="color" onchange="calculatePrice()"> ملون</label>
             </div>
-        </div>
+
+            <input type="hidden" name="status" value="pending">
+
+            <!-- نوع الملف -->
+            <label>نوع الملف</label>
+            <select name="print_type" id="fileType" onchange="calculatePrice()"></select>
+
+            <!-- عدد الأوراق -->
+            <label>عدد الأوراق</label>
+            <input type="number" name="paper_count" id="paperCount" min="1" placeholder="مثال: 10" oninput="calculatePrice()">
+            <small class="warning">🔴 تنبيه ‼️ <br> أكثر من خمس صفحات طباعة يتم تسليمها بعد ٢٤ ساعة.</small>
+
+            <!-- السعر النهائي -->
+            <label>السعر النهائي</label>
+            <input type="text" id="totalPrice" readonly>
+
+            <!-- الطباعة -->
+            <label>الطباعة</label>
+            <select name="print_side" id="printSide" onchange="calculatePrice()">
+                <option value="single">وجه واحد</option>
+            </select>
+
+            <!-- اسم الطابعة -->
+            <input hidden value="{{ $user->id }}" type="text" name="printer_id">
+
+            <!-- رفع الملف -->
+            <label>رفع الملف</label>
+            <input type="file" name="file" id="fileUpload">
+
+            <!-- رفع الصورة بالكاميرا -->
+            <label id="cameraTitle" style="display: none;">التقاط صورة بالكاميرا</label>
+            <div id="cameraUpload" style="display: none;">
+                <input type="file" name="file" accept="image/*" capture="environment">
+            </div>
+
+            <!-- تاريخ التسليم -->
+            <label>تاريخ التسليم</label>
+            <input type="datetime-local" name="dead_line">
+
+            <!-- ملاحظات -->
+            <label>ملاحظات إضافية</label>
+            <textarea name="comment" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+
+            <!-- زر الإرسال -->
+            <div class="submit-btn">
+                <button type="submit">إرسال الطلب</button>
+            </div>
+        </form>
     </div>
 </div>
-
 @endsection
 
 <style>
+    .print-form-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 50px 20px;
+        min-height: calc(100vh - 150px); /* تعديل لتفادي الفوتر */
+        background-color: #f9f9f9;
+    }
+
+    .print-form-box {
+        background-color: white;
+        padding: 30px;
+        max-width: 700px;
+        width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #4fccb7;
+    }
+
+    .form-title span {
+        color: #333;
+    }
+
+    form label {
+        display: block;
+        margin: 15px 0 5px;
+        font-weight: bold;
+        color: #333;
+    }
+
     input[type="text"],
     input[type="number"],
     input[type="file"],
     input[type="datetime-local"],
     select,
     textarea {
-        border: 1px solid #ccc !important;
-        padding: 5px;
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    .flex-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .submit-btn {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    .submit-btn button {
+        padding: 10px 30px;
+        background-color: #4fccb7;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .submit-btn button:hover {
+        background-color: #3cb39e;
+    }
+
+    .warning {
+        color: red;
+        margin-top: 5px;
+        font-size: 12px;
     }
 </style>
 
@@ -139,17 +178,31 @@
     function updateOptions() {
         const serviceType = document.getElementById('serviceType').value;
         const fileType = document.getElementById('fileType');
+        const paperSizes = document.getElementById('paperSizes');
+        const cameraUpload = document.getElementById('cameraUpload');
+        const cameraTitle = document.getElementById('cameraTitle');
+        const fileUpload = document.getElementById('fileUpload');
+
         fileType.innerHTML = '';
+        paperSizes.innerHTML = '';
 
         if (serviceType === 'operator') {
-
             fileType.innerHTML += `<option value="pdf">PDF</option>`;
             fileType.innerHTML += `<option value="word">Word</option>`;
             fileType.innerHTML += `<option value="excel">Excel</option>`;
+            paperSizes.innerHTML += `<label><input type="radio" name="paper_size" value="A4" onchange="calculatePrice()"> A4</label>`;
+            paperSizes.innerHTML += `<label><input type="radio" name="paper_size" value="A3" onchange="calculatePrice()"> A3</label>`;
+            cameraUpload.style.display = 'none';
+            cameraTitle.style.display = 'none';
+            fileUpload.style.display = 'block';
         } else {
             fileType.innerHTML += `<option value="word">وورد</option>`;
             fileType.innerHTML += `<option value="excel">إكسيل</option>`;
             fileType.innerHTML += `<option value="ppt">بوربوينت</option>`;
+            paperSizes.innerHTML += `<label><input type="radio" name="paper_size" value="A4" onchange="calculatePrice()"> A4</label>`;
+            cameraUpload.style.display = 'block';
+            cameraTitle.style.display = 'block';
+            fileUpload.style.display = 'block';
         }
 
         calculatePrice();
@@ -161,6 +214,7 @@
         const color = document.querySelector('input[name="print_color"]:checked')?.value;
         const file = document.getElementById('fileType').value;
         const count = parseInt(document.getElementById('paperCount').value) || 0;
+        const side = document.getElementById('printSide').value;
 
         let price = 0;
 
@@ -176,8 +230,12 @@
             if (file === 'pdf') price = 0.75;
         }
 
-        const total = (price * count).toFixed(3);
-        document.getElementById('totalPrice').value = total + ' دينار';
+        let total = price * count;
+        if (side === 'double') {
+            total *= 2;
+        }
+
+        document.getElementById('totalPrice').value = total.toFixed(3) + ' دينار';
     }
 
     window.onload = () => {

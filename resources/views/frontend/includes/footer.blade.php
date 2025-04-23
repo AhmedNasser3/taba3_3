@@ -99,13 +99,20 @@
 
             <div class="footer-section">
                 <h3>{{ __("اتصل بنا") }}</h3>
-                <p>{{ __("البريد الإلكتروني") }}: info@yourcompany.com</p>
-                <p>{{ __("الهاتف") }}: +20 01063265173</p>
+                <p>{{ __("البريد الإلكتروني") }}: el6aba3@gmail.com</p>
+                <p>{{ __("الهاتف") }}: +965 6766 1103</p>
                 <div class="social-media">
-                    <a href="#" target="_blank" aria-label="{{ __('فيسبوك') }}"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" target="_blank" aria-label="{{ __('تويتر') }}"><i class="fab fa-twitter"></i></a>
-                    <a href="#" target="_blank" aria-label="{{ __('إنستغرام') }}"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank" aria-label="{{ __('فيسبوك') }}">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://x.com/el6aba3?s=11" target="_blank" aria-label="{{ __('تويتر') }}">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/el6aba3/" target="_blank" aria-label="{{ __('إنستغرام') }}">
+                        <i class="fab fa-instagram"></i>
+                    </a>
                 </div>
+
             </div>
 
             <div class="footer-section newsletter">
@@ -117,7 +124,7 @@
         </div>
 
         <div style="text-align: center; margin-top: 20px;">
-            <p>&copy; <span id="year"></span> {{ __("اسم شركتك. جميع الحقوق محفوظة.") }}</p>
+            <p>&copy; <span id="year"></span> {{ __("الطباع. جميع الحقوق محفوظة.") }}</p>
         </div>
     </footer>
 
